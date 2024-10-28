@@ -48,4 +48,4 @@ Aşağıda, projede kullanılan önemli fonksiyonlar ve kod parçacıkları bulu
 ```
 ### Ornek 
 
-![Örnek Harita]([https://github.com/gokhn/GoogleMapsDrivingRoute/blob/master/route.png])
+![Örnek Harita]([[https://github.com/gokhn/GoogleMapsDrivingRoute/blob/master/route.png](https://github.com/gokhn/GoogleMapsDrivingRoute/blob/master/route.png)])
