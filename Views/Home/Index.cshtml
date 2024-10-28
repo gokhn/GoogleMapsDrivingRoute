@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "Calculate Route";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Rota Hesaplama</h1>
+    <p> İki mesafe arasındaki mesafe,süre ve harita üzerinde rotanın gösterilmesi </p>
+
+
+</div>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Google Maps Integration</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.ApiKey&libraries=places"></script>
+</head>
+<body>
+
+    <div style="margin:10px;">
+        <input type="text" id="departure" placeholder="Başlangıç Konumu" />
+        <input type="text" id="arrival" placeholder="Varış Konumu" />
+        <button id="routeBtn">Rota Oluştur</button>
+    </div>
+    <div id="map" style="height: 500px;"></div>
+    <div id="details">
+        <p>Mesafe: <span id="distance"></span></p>
+        <p>Süre: <span id="duration"></span></p>
+    </div>
+
+    <script>
+        function initMap() {
+            const map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 41.0082, lng: 28.9784 }, // Istanbul koordinatları
+                zoom: 7,
+            });
+
+            const directionsService = new google.maps.DirectionsService();
+            const directionsRenderer = new google.maps.DirectionsRenderer();
+            directionsRenderer.setMap(map);
+
+            const calculateRoute = () => {
+                const request = {
+                    origin: document.getElementById('departure').value,
+                    destination: document.getElementById('arrival').value,
+                    travelMode: 'DRIVING',
+                };
+
+                directionsService.route(request, (result, status) => {
+                    if (status === 'OK') {
+                        directionsRenderer.setDirections(result);
+                        document.getElementById('distance').innerText = result.routes[0].legs[0].distance.text;
+                        document.getElementById('duration').innerText = result.routes[0].legs[0].duration.text;
+                    }
+                });
+            };
+
+            document.getElementById('routeBtn').addEventListener('click', calculateRoute);
+        }
+
+        google.maps.event.addDomListener(window, 'load', initMap);
+    </script>
+</body>
+</html>
